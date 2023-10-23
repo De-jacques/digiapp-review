@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="css/pdf.css" />
+    </head>
+    <body>
+        <header></header>
+
+        <div class="container">
+            <h1 class="title">FACTURE PROFORMA</h1>
+
+            <div class="row info">
+                <div class="col-md-4 client-info">
+                    <div class="row">
+                        <div class="col-md-4 entete">Client</div>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">Nom client</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 entete">Email client</div>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">Email client</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 entete">Numero client</div>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">Numero client</div>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 facture-info">
+                    <table class="no-facture">
+                        <tr>
+                            <th>N° : &nbsp;</th>
+                            <td>REF_7456454544DC_452</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <table
+                class="table table-hover table-striped table-bordered info-generale"
+                style="text-align: center">
+                <thead>
+                    <tr>
+                        <th>Référence</th>
+                        <th>Date de facturation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>REF_7456454544DC_452</td>
+                        <td>dd-mm-yyyy</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table
+                class="table table-hover table-striped"
+                style="margin-top: 2cm; margin-bottom: 1cm">
+                <thead>
+                    <th>#</th>
+                    <th>Désignation</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>YO</td>
+                        <td>500</td>
+                        <td>5</td>
+                        <td>2500</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>YO</td>
+                        <td>500</td>
+                        <td>5</td>
+                        <td>2500</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+            <div class="row" style="margin-top: 1cm">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <th>Total HT</th>
+                            <td>2500</td>
+                        </tr>
+                        <tr>
+                            <th>Remise</th>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>Total TTC</th>
+                            <td>2500</td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+
+        <footer>
+            Copyright &copy;
+            <?php echo date("Y");?>
+        </footer>
+    </body>
+</html>

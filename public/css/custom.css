@@ -1,0 +1,17 @@
+.section {
+    margin-top: 0;
+}
+
+.digicorp {
+    width: 35%;
+}
+
+#preloader {
+    color: red;
+}
+
+.cke_editable {
+    font-size: 13px;
+    line-height: 0.2 !important;
+    word-wrap: break-word;
+}

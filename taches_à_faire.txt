@@ -1,0 +1,134 @@
+REVOIR L'ADRESSE DE LA PROFORMA GÉNÉRÉE
+
+
+Envoie de demande de quotation au fournisseur
+Celle-ci est en fait une demande de mise sur pieds de facture au fournisseur
+
+- Choix d'éléments
+
+On liste la demande
+Bon d'entré saisi par nous
+
+
+------------------------------------------------------------------------------
+Pour l'instant enrégistrement des factures
+
+Au niveau des factures d'achats
+
+La facture dont on réçoit on a bésoin de 
+
+- Fournisseur | prestataire
+- Date
+- Numero de facture
+- Objet
+si le type est exonéré juste le Montant
+- Montant HT facture
+- Tva = 0
+
+
+Sinon
+- Montant HT facture
+- Montant TTc
+- Tva
+
+
+unique Echéances
+- date d'Echéance avec décompte à partir de la date d'enrégistrement
+
+Comptant
+- Type de règlement Comptant
+C'est à dire payer immédiatement (Notification facture à regler)
+
+Echélonnée
+-Ici nous définissons les dates différentes à et le nombre de pourcentage+
+
+
+
+Mettre un code d'échéance dynamique
+
+-Type / moyen de paiement(Comptant,Echélonnée,Echéance Unique)
+
+----------------------------------------------------------------------------------
+
+RAMBA DE L'ÉCHÉANCE 
+
+
+Facture : Montant | Solde restant | 
+Prochaine échéance dans telle jour avec le Montant qu'il faut à payer
+
+
+Prendre en compte le 
+Un bon est associé à une facture 
+si oui on choisie l'échéance et puis le numéro de paiement
+
+
+---------------------------------------------------------------------------------
+PROCESSUS DE FACTURATION
+
+Les échéances sont saisies dès le départ
+Conditions de vente
+Moyen de paiement (caisse, checque)
+Type de regle (titre de echéance et date)
+
+RETARD DE LIVRAISON: Pouvoir repourser l'échéance avec une nouvelle date | report d'échéance qui demande une validation de la part du client 
+La modification de la date de livraison doit mettre à jour immédiatement la date de paiement au client !
+La livraison se fait avant le paiement.
+
+-----------------------------------------------------------------------------------
+Ajout de condiction de vent qui suit un chargement de page avec une politique déjà prédéfini
+
+Moyen de paiement, échéance, condiction de paiement
+
+Imprimer une facture définitive, ou une facture partielle
+La partielle fait office au niveau de la trésorérie(numéro de facture, objet, taux);
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+FONCTION DE JS label
+ function addFract() {
+            $("#fractionne").button("loading");
+            var tableLength = $("#productTable tbody tr").length;
+            var tableRow;
+            var arrayNumber;
+            var count;
+            if (tableLength > 0) {
+                tableRow = $("#productTable tbody tr:last").attr('id');
+                arrayNumber = $("#productTable tbody tr:last").attr('clazz');
+                count = tableRow.substring(3);
+                count = Number(count) + 1;
+                arrayNumber = Number(arrayNumber) + 1;
+            } else {
+                // no table row
+                count = 1;
+                arrayNumber = 0;
+            }
+
+            $("#fractionne").button("reset");
+
+            var tr = '<tr id="productLabel' + count + '" clazz="' + arrayNumber + '">' +
+                '                           <td colspan="4">' +
+                '                               <div class="form-group" style="">' +
+                '                                   <input type="text" name="label[]" id="' + count + '"' +
+                '                                       placeholder="Insérer un label" autocomplete="off"' +
+                '                                       class="form-control labelFormControl" />' +
+                '                               </div>' +
+                '                           </td>' +
+                '                           <td>' +
+                '                               <button class="btn btn-default removeProductLabelBtn" type="button"' +
+                '                                   id="removeProductLabelBtn"' +
+                '                                   onclick="removeProductLabel(' + count + ')"><i' +
+                '                                       class="bi bi-trash-fill"' +
+                '                                       style="color: red; font-size: 1.5em"></i>' +
+                '                               </button>' +
+                '                           </td>' +
+
+                '                       </tr>';
+            if (tableLength > 0) {
+                $("#productTable tbody tr:last").after(tr);
+            } else {
+                $("#productTable tbody").append(tr);
+            }
+
+
+        } // /add row

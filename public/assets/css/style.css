@@ -1,0 +1,57 @@
+.detail-button,
+.edit-button,
+.delete-button {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+span[class^='detail-button-'],
+span[class^='edit-button-'],
+span[class^='delete-button-'] {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.collapse {
+    border: 1px solid #ddd;
+}
+
+.action-icon {
+    margin-right: 10px;
+}
+
+.danger-icon {
+    color: red !important;
+}
+
+.warning-icon {
+    color: orange !important;
+}
+
+.primary-icon {
+    color: #2a5d6d !important;
+}
+
+.info-icon {
+    color: skyblue !important;
+}
+
+.success-icon {
+    color: green !important;
+}
+
+.secondary-icon {
+    color: #000000 !important;
+}
+
+.icon-flipped {
+    position: absolute;
+    transform: scaleX(-1) !important;
+    -moz-transform: scaleX(-1) !important;
+    -webkit-transform: scaleX(-1) !important;
+    -ms-transform: scaleX(-1) !important;
+}

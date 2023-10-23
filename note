@@ -1,0 +1,26 @@
+
+-- php artisan db:wipe
+php artisan migrate
+php artisan db:seed --class=UserSeeder
+-- php artisan db:seed --class=ClientSeeder
+-- php artisan db:seed --class=ProviderSeeder
+-- php artisan db:seed --class=SupplierSeeder
+-- php artisan db:seed --class=ContactSeeder
+-- php artisan db:seed --class=CategorieSeeder
+-- php artisan db:seed --class=SubCategorySeeder
+-- php artisan db:seed --class=MarqueSeeder
+-- php artisan db:seed --class=EntrepotSeeder
+-- php artisan db:seed --class=ProduitSeeder       
+php artisan serve
+
+DIGICORP ERP V 1.0.0
+- PRODUIT
+- CLIENT
+- PROFORMA
+- FOURNISSEUR
+- STOCK
+- BON DE RECEPTION
+- BON DE SORTIE
+
+SUPPLIER : Founisseur
+PROVIDER: Prestataire

@@ -1,0 +1,30 @@
+language: php
+
+php:
+    - 7.1
+    - 7.2
+
+sudo: false
+
+before_install:
+  - composer self-update
+
+install:
+  - travis_retry composer update --no-interaction --prefer-source
+
+script:
+  - composer phpcs
+  - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+
+matrix:
+  fast_finish: true
+
+
+notifications:
+    on_success: never
+    on_failure: always
