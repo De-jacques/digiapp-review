@@ -87,9 +87,9 @@
                                                                     </a>
                                                                 @else
                                                                 @endif
-                                                                <a href="{{route ('facture' , $proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark" target="_blank">
+                                                                {{-- <a href="{{route ('facture' , $proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark" target="_blank">
                                                                     <i class="fa fa-share"></i>
-                                                                </a>
+                                                                </a> --}}
                                                                 @if (Auth::user()->role == 'commercial' || Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin')
                                                                     <a href="{{ route('proformas.edit', $proforma->ref_proforma) }}"
                                                                         type="button" class="btn btn-outline-warning">
