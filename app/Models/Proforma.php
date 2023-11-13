@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+Use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Proforma extends Model
 {
@@ -110,5 +113,10 @@ class Proforma extends Model
         }
 
         return $proformaItems;
+    }
+
+    public function customer(): belongsTo
+    {
+        return $this->belongsTo(Client::class);
     }
 }

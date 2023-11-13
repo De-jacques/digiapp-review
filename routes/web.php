@@ -1,33 +1,35 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\EntrepotController;
-use App\Http\Controllers\MarqueController;
-use App\Http\Controllers\ProduitController;
-use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Customer;
-use App\Http\Controllers\SubCategoryController;
-use App\Http\Controllers\ProformaController;
-use App\Http\Controllers\PrinterController;
-use App\Http\Controllers\EmailController;
-use App\Http\Controllers\MouvementController;
-use App\Http\Controllers\Profile;
-use App\Http\Controllers\PDFController;
-use App\Http\Controllers\PreReleaseController;
-use App\Http\Controllers\ProviderController;
-use App\Http\Controllers\SerialNumberController;
-use App\Http\Controllers\Setting;
-use App\Http\Controllers\SortieController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\UserController;
-use App\Models\Stock;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Stock;
 use Ramsey\Collection\Sort;
 use Sabberworm\CSS\Settings;
+use App\Http\Controllers\Profile;
+use App\Http\Controllers\Setting;
+use App\Http\Controllers\Customer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BonController;
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\MarqueController;
+use App\Http\Controllers\SortieController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FactureController;
+use App\Http\Controllers\PrinterController;
+use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\EntrepotController;
+use App\Http\Controllers\ProformaController;
+use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\MouvementController;
+use App\Http\Controllers\PreReleaseController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SerialNumberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,6 +133,8 @@ Route::group(['prefix' => 'produits'], function () {
     Route::get('/importer_produits', [ProduitController::class, 'importer'])->name('produits.importer');
 
     Route::resource('/proformas', ProformaController::class);
+    Route::resource('/bons', BonController::class);
+    Route::resource('/factures', FactureController::class);
     Route::get('register/serial-number/{entree}', [SerialNumberController::class, 'makeSn'])->name('serial-number.makeSn');
     Route::get('out/serial-number/{sortie}', [SerialNumberController::class, 'out'])->name('sn.out');
     Route::post('out/serial-number/{sortie}/add', [SerialNumberController::class, 'outOf'])->name('sn.outOf');
@@ -149,11 +153,18 @@ Route::group(['prefix' => 'produits'], function () {
 
     Route::group(['prefix' => 'proformas'], function () {
         Route::get('/impression/{proforma}', [PrinterController::class, 'imprimer'])->name('imprimer');
+        Route::get('/impression/{facture}', [PrinterController::class, 'facture'])->name('facture');
         // Route::get('/impression/{proforma}', [PrinterController::class, 'test'])->name('imprimer');
         Route::get('/regeneration/{proforma}', [PrinterController::class, 'regenererProforma'])->name('regenerer');
 
         Route::group(['prefix' => 'email'], function () {
             Route::get('/{proforma}', [EmailController::class, 'proformaEmail'])->name('sendMail');
         });
+
+        Route::group(['prefix' => 'bons'], function () {
+            Route::get('/creer/{proforma}', [BonController::class, 'create'])->name('creer');
+        });
     });
+
+    
 });

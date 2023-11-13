@@ -1,0 +1,129 @@
+@extends('pages.back.admin.master', ['titre' => 'GESTION DES FACTURES'])
+@section('admin-content')
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+            <div class="tables">
+                <div>
+                    <div class="row gy-4">
+                        <div class="col-md-12">
+                            <div class="card mb-0">
+                                {{-- <div class="text-center">
+                                    <div class="col-md-12 d-flex justify-content-start px-2 py-3">
+                                        <a type="button" class="btn btn-outline-primary"
+                                            href="{{ route('proformas.create') }}">
+                                            <i class="fa fa-plus"></i> proforma
+                                        </a>
+                                    </div>
+                                </div> --}}
+                                <div>
+                                    @if (Session::has('message'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ Session::get('message') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    @endif
+
+                                    @if (Session::has('probleme'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            {{ Session::get('probleme') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    @endif
+                                    @if (Session::has('error'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            {{ Session::get('error') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0  table-hover display" id="proTable">
+                                            <thead>
+                                                <tr class="">
+                                                    <th style="display: none">Id</th>
+                                                    <th>Référence</th>
+                                                    <th>Réf Proforma</th>
+                                                    <th>Montant</th>
+                                                    <th>Date</th>
+                                                    <th>Réf Facture</th>
+                                                    <th class="text-center">
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{-- @isset($proformas)
+                                                    @foreach ($proformas as $proforma)
+                                                        <tr>
+                                                            <td style="display: none">{{ $proforma->id }}</td>
+                                                            @if ($proforma->ref_proforma == null)
+                                                                <td>...</td>
+                                                            @else
+                                                                <td>{{ $proforma->ref_proforma }}</td>
+                                                            @endif
+                                                            <td>{{ $proforma->getClient($proforma->customer_id) }}</td>
+                                                            <td>
+                                                                {{ number_format($proforma->total_ht, 0, ',', ' ') }}
+
+                                                            </td>
+                                                            <td>
+                                                                {{ number_format($proforma->total, 0, ',', ' ') }}
+
+                                                            <td>{{ date('d-m-y H:i', strtotime($proforma->created_at)) }}</td>
+                                                            <td class="text-center">
+                                                                <a href="{{ route('imprimer', $proforma->ref_proforma) }}"
+                                                                    target="_blank" type="button"
+                                                                    class="btn btn-outline-primary">
+                                                                    <i class="fa fa-print"></i>
+                                                                </a>
+                                                                @if ($proforma->status_bon == 0)
+                                                                    <a href="{{route('creer', $proforma->ref_proforma)}}" type="button" class="btn btn-outline-success" target="_blank">
+                                                                        <i class="fa fa-file"></i>
+                                                                    </a>
+                                                                @else
+                                                                @endif
+                                                                <a href="{{route ('facture' , $proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark" target="_blank">
+                                                                    <i class="fa fa-share"></i>
+                                                                </a>
+                                                                @if (Auth::user()->role == 'commercial' || Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin')
+                                                                    <a href="{{ route('proformas.edit', $proforma->ref_proforma) }}"
+                                                                        type="button" class="btn btn-outline-warning">
+                                                                        <i class="fa fa-pencil"></i>
+                                                                    </a>
+                                                                @endif
+                                                                <a href="{{ route('sendMail', $proforma->ref_proforma) }}"
+                                                                    type="button" class="btn btn-outline-dark">
+                                                                    <i class="fa fa-envelope"></i>
+                                                                </a>
+                                                                @if (Auth::user()->role == 'commercial' || Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin')
+                                                                    <a href="" type="button"
+                                                                        class="btn btn-outline-danger" data-bs-toggle="modal"
+                                                                        data-bs-target="#delete{{ $proforma->id }}">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endisset --}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+@endsection
+@section('script')
+@endsection

@@ -81,11 +81,15 @@
                                                                     class="btn btn-outline-primary">
                                                                     <i class="fa fa-print"></i>
                                                                 </a>
-                                                                {{-- <a href="#
-                                                 {{ route('regenerer', $proforma->ref_proforma) }} 
-                                                    " type="button" class="btn btn-outline-success">
-                                                        <i class="fa fa-repeat"></i>
-                                                    </a> --}}
+                                                                @if ($proforma->status_bon == 0)
+                                                                    <a href="{{route('creer', $proforma->ref_proforma)}}" type="button" class="btn btn-outline-success" target="_blank">
+                                                                        <i class="fa fa-file"></i>
+                                                                    </a>
+                                                                @else
+                                                                @endif
+                                                                <a href="{{route ('facture' , $proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark" target="_blank">
+                                                                    <i class="fa fa-share"></i>
+                                                                </a>
                                                                 @if (Auth::user()->role == 'commercial' || Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin')
                                                                     <a href="{{ route('proformas.edit', $proforma->ref_proforma) }}"
                                                                         type="button" class="btn btn-outline-warning">
@@ -105,37 +109,6 @@
                                                                 @endif
                                                             </td>
                                                         </tr>
-
-                                                        <!-- EDITION Modal -->
-                                                        <div class="modal fade" id="edition{{ $proforma->id }}"
-                                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="editionLabel">
-                                                                            Edition de proforma {{ $proforma->id }}
-                                                                        </h5>
-                                                                        <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <a type="button" href="" data-bs-toggle="modal"
-                                                                            data-bs-target="#informations{{ $proforma->id }}"
-                                                                            class="btn btn-secondary col-md-12"
-                                                                            data-bs-dismiss="modal">
-                                                                            Editer les informations de la proforma
-                                                                        </a>
-                                                                        <a type="submit" class="btn btn-primary col-md-12 mt-3"
-                                                                            href="{{ route('proformas.edit', [$proforma->ref_proforma]) }}">
-                                                                            Editer les produits de la proforma
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        {{-- End of sufssion modal --}}
-
 
                                                         <!-- Suppression Modal -->
                                                         <div class="modal fade" id="delete{{ $proforma->id }}"

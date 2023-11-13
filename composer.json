@@ -12,7 +12,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^6.4",
         "ckeditor/ckeditor": "4.*",
-        "doctrine/dbal": "^3.6",
+        "doctrine/dbal": "^3.7",
         "dompdf/dompdf": "*",
         "goodnesskay/laravelpdfviewer": "^1.0",
         "guzzlehttp/guzzle": "^7.2",

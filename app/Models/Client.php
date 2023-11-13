@@ -54,4 +54,6 @@ class Client extends Model
     //     $contact = ContactEntrepriseClient::where('client_id',$id);
     //     return $contact;
     // }
+
+    
 }

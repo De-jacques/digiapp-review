@@ -34,8 +34,8 @@
                         <!--data-bs-toggle="modal" data-bs-target="#staticBackdrop"-->
 
                             <li><a class="sidebar-link" href="{{ route('proformas.index') }}">Proformas</a></li>
-                            {{-- <li><a class="sidebar-link" href="#">Factures</a></li> --}}
-
+                            <li><a class="sidebar-link" href="{{ route('bons.index')}}">Bons</a></li>
+                            <li><a class="sidebar-link" href="{{ route('factures.index') }}">Factures</a></li>
                     </ul>
                 </li>
             @endif
