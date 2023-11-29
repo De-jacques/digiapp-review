@@ -153,8 +153,9 @@ Route::group(['prefix' => 'produits'], function () {
 
     Route::group(['prefix' => 'proformas'], function () {
         Route::get('/impression/{proforma}', [PrinterController::class, 'imprimer'])->name('imprimer');
-        Route::get('/impression/{facture}', [PrinterController::class, 'facture'])->name('facture');
-        // Route::get('/impression/{proforma}', [PrinterController::class, 'test'])->name('imprimer');
+        Route::get('/facture/{facture}', [PrinterController::class, 'facture'])->name('facture');
+        Route::get('/uploadFacture/{proforma}', [PrinterController::class, 'uploadFacture'])->name('uploadFacture');
+        Route::get('/regenererFacture/{facture}', [PrinterController::class, 'regenererFacture'])->name('regenererFacture');
         Route::get('/regeneration/{proforma}', [PrinterController::class, 'regenererProforma'])->name('regenerer');
 
         Route::group(['prefix' => 'email'], function () {

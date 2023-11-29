@@ -104,28 +104,6 @@ class BonController extends Controller
                         return route()->back();
                     }
             }
-            // if ($request->type_bon == "BPA") {
-            //     $refBPA = 'BPA'.'-'.$refDate.'-'.$hour;
-            //     dd($refBPA);
-            //     $renameDoc = $refBPA.'.'.$getExtension;
-            //     $saveDoc = $refBPA.'.'.$getExtension;
-            //     $pathStorage = $clientName .'/'.'BPA'.'/';
-            //     $fileDoc->move($pathStorage, $renameDoc);
-            //     $saveBPA = Bon::create([
-            //         'type_bon_id' => 2,
-            //         'proforma_id' => $proformaId,
-            //         'created_at' => Carbon::now(),
-            //         'updated_at' => Carbon::now(),
-            //         'path' => $pathStorage,
-            //         'ref_bon' => $renameDoc
-            //     ]);
-            //     if ($saveBPA) {
-            //         return redirect()->route('bons.index')->with('success-bon', 'Le bon a été crée avec succès.');   
-            //     } else {
-            //         return route()->back();
-            //     }
-                
-            // }
          }
         
     }

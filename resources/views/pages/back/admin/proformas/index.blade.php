@@ -85,9 +85,14 @@
                                                                     <a href="{{route('creer', $proforma->ref_proforma)}}" type="button" class="btn btn-outline-success" target="_blank">
                                                                         <i class="fa fa-file"></i>
                                                                     </a>
-                                                                @else
+                                                                {{-- @else --}}
                                                                 @endif
-                                                                {{-- <a href="{{route ('facture' , $proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark" target="_blank">
+                                                                @if ($proforma->status_invoice == 0)
+                                                                  <a href="{{route ('facture' , $proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark">
+                                                                    <i class="fa fa-share"></i>
+                                                                </a>  
+                                                                @endif
+                                                                {{-- <a href="{{route ('test',$proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark" target="_blank">
                                                                     <i class="fa fa-share"></i>
                                                                 </a> --}}
                                                                 @if (Auth::user()->role == 'commercial' || Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin')

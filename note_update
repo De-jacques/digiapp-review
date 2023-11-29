@@ -1,0 +1,6 @@
+
+composer require doctrine/dbal
+php artisan migrate
+-- php artisan db:seed --class=TypeBon
+php artisan serve
+

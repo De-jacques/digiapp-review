@@ -2,84 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fractionnement;
-use Illuminate\Http\Request;
-use App\Models\Proforma;
-use App\Models\ProformaItem;
-use App\Models\Client as Customer;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Entree;
-use App\Models\EntreeIterm;
-use App\Models\Entrepot;
-use App\Models\Produit;
-use App\Models\Provider;
-use App\Models\SerialNumber;
 use App\Models\Sortie;
-use App\Models\SortieIterm;
+use App\Models\Facture;
+use App\Models\Produit;
+use App\Models\Entrepot;
+use App\Models\Proforma;
+use App\Models\Provider;
 use App\Models\Supplier;
-use App\Models\User;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use App\Models\EntreeIterm;
+use App\Models\SortieIterm;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use App\Models\ProformaItem;
+use App\Models\SerialNumber;
+use Illuminate\Http\Request;
+use App\Models\Fractionnement;
 use NumberToWords\NumberToWords;
+use App\Models\Client as Customer;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\Storage;
 
 
 class PrinterController extends Controller
 {
-  public function test()
-  {
-    $orderRef = url()->current();
-    $extractLink = Str::after($orderRef, 'impression/');
-    $deleteOrderOnLink = Str::before($extractLink, '/edit');
-    $refProforma = $deleteOrderOnLink;
-
-    $proforma = Proforma::where('ref_proforma', '=', $refProforma)->first();
-
-    $data['proforma'] = $proforma;
-
-    $data['proformaItems'] = ProformaItem::where('ref_proforma', '=', $refProforma)->get();
-
-    $customer_id = $proforma->customer_id;
-    $customer = Customer::find($customer_id);
-    $data['customer'] = $customer->nom;
-    $data['customer_localisation'] = $customer->localisation;
-    $data['customer_addresse'] = $customer->code_postale;
-    $data['customer_number'] = $customer->contact;
-
-    $checker = $customer->taxe_tva;
-
-    if ($checker == "Oui") {
-      $data['taxe_tva'] = 18;
-    } else {
-      $data['taxe_tva'] = 0;
-    }
-
-    $author = $proforma->author;
-    $data['author'] = User::find($author);
-
-    $issue_date = $proforma->issue_date;
-
-    $carbonDate = Carbon::createFromFormat('Y-m-d', $issue_date);
-
-    $carbonDate->locale('fr');
-    $data['issue_date'] = $carbonDate->translatedFormat('l j F Y');
-
-    $data['livraison'] = 12;
-
-    $numberToWords = new NumberToWords();
-    $numberTransformer = $numberToWords->getNumberTransformer('fr');
-    $data['numberToWords'] = $numberTransformer->toWords($proforma->total);
-
-    $data['filename'] = $proforma->ref_proforma;
-
-    $fractions = Fractionnement::where('ref_proforma', '=', $refProforma)->get();
-    $data['fractions'] = $fractions->toArray();
-    $data['type'] = $data['fractions'][0]["type"];
-
-    return view('pages.back.admin.proformas.printer', $data);
-  }
+  // public function test()
+  // {
+  //   $orderRef = url()->current();
+  //   $extractLink = Str::after($orderRef, 'impression/');
+  //   $deleteOrderOnLink = Str::before($extractLink, '/edit');
+  //   $refProforma = $deleteOrderOnLink;
+  //   $proforma = Proforma::where('ref_proforma', '=', $refProforma)->first();
+  //   $data['proforma'] = $proforma;
+  //   $data['proformaItems'] = ProformaItem::where('ref_proforma', '=', $refProforma)->get();
+  //   $customer_id = $proforma->customer_id;
+  //   $customer = Customer::find($customer_id);
+  //   $data['customer'] = $customer->nom;
+  //   $data['customer_localisation'] = $customer->localisation;
+  //   $data['customer_addresse'] = $customer->code_postale;
+  //   $data['customer_number'] = $customer->contact;
+  //   $checker = $customer->taxe_tva;
+  //   if ($checker == "Oui") {
+  //     $data['taxe_tva'] = 18;
+  //   } else {
+  //     $data['taxe_tva'] = 0;
+  //   }
+  //   $author = $proforma->author;
+  //   $data['author'] = User::find($author);
+  //   $issue_date = $proforma->issue_date;
+  //   $carbonDate = Carbon::createFromFormat('Y-m-d', $issue_date);
+  //   $carbonDate->locale('fr');
+  //   $data['issue_date'] = $carbonDate->translatedFormat('l j F Y');
+  //   $data['livraison'] = 12;
+  //   $numberToWords = new NumberToWords();
+  //   $numberTransformer = $numberToWords->getNumberTransformer('fr');
+  //   $data['numberToWords'] = $numberTransformer->toWords($proforma->total);
+  //   $data['filename'] = $proforma->ref_proforma;
+  //   $fractions = Fractionnement::where('ref_proforma', '=', $refProforma)->get();
+  //   $data['fractions'] = $fractions->toArray();
+  //   $data['type'] = $data['fractions'][0]["type"];
+  //   return view('pages.back.admin.proformas.printer', $data);
+  // }
   public function imprimer()
   {
     $orderRef = url()->current();
@@ -120,7 +106,6 @@ class PrinterController extends Controller
     $data['fractions'] = $fractions->toArray();
     $data['type'] = $data['fractions'][0]["type"];
     $pdf = PDF::loadView('pages.back.admin.proformas.printer', $data);
-    // $pdf = PDF::loadView('pages.back.admin.factures.create_facture', $data);
     $pdf->setPaper('a4', 'portrait');
     $fileName = $customer->nom . '/' . 'proformas' . '/' . $data['filename'] . '.pdf';
     // dd($fileName);
@@ -132,13 +117,91 @@ class PrinterController extends Controller
     return $pdf->stream();
   }
 
+  public function uploadFacture(){
+    $orderRef = url()->current();
+    $extractLink = Str::after($orderRef, 'uploadFacture/');
+    $refProforma = $extractLink;
+    $proforma = Proforma::where('ref_proforma', '=', $refProforma)->first();
+    // dd($proforma->ref_proforma);
+   return view('pages.back.admin.factures.upload_facture', compact('proforma'));
+  }
   public function facture()
   {
     $orderRef = url()->current();
-    $extractLink = Str::after($orderRef, 'impression/');
-    $deleteOrderOnLink = Str::before($extractLink, '/edit');
-    $refProforma = $deleteOrderOnLink;
+    $extractLink = Str::after($orderRef, 'facture/');
+    $refProforma = $extractLink;
     $proforma = Proforma::where('ref_proforma', '=', $refProforma)->first();
+    $proforma->status_invoice = 1;
+    $proforma->save();
+    $saveDate = date('Y-m-d H-i-s');
+    $day = date('d');
+    $month = date('m');
+    $year = date('Y');
+    $lastValueYear = substr($year, 2);
+    $refDate = $day.''.$month.''.$lastValueYear;
+    $hour = date('His');
+    $refFacture = 'FA'.'-'.$refDate.'-'.$hour;
+    $saveInvoice = Facture::create([
+      'ref_proforma' => $proforma->id,
+      'montant' => $proforma->total,
+      'date_facture' => $saveDate,
+      // 'ref_facture' => $refFacture,
+      // 'file_proforma' => ,
+      'created_at' => $saveDate,
+    ]);
+    return redirect()->route('factures.index')->with('success-invoice', 'La facture a été crée avec succès.');
+    
+    
+    
+    // $data['proforma'] = $proforma;
+    // $data['proformaItems'] = ProformaItem::where('ref_proforma', '=', $refProforma)->get();
+    // $customer_id = $proforma->customer_id;
+    // $customer = Customer::find($customer_id);
+    // $data['customer'] = $customer->nom;
+    // $data['customer_localisation'] = $customer->localisation;
+    // $data['customer_addresse'] = $customer->code_postale;
+    // $data['customer_number'] = $customer->contact;
+    // $checker = $customer->taxe_tva;
+
+    // if ($checker == "Oui") {
+    //   $data['taxe_tva'] = 18;
+    // } else {
+    //   $data['taxe_tva'] = 0;
+    // }
+    // if ((int)$proforma->retenu != 0) {
+    //   $data["retenu"] = (int)$proforma->retenu;
+    // }
+    // $author = $proforma->author;
+    // $data['author'] = User::find($author);
+    // $issue_date = $proforma->issue_date;
+    // $carbonDate = Carbon::createFromFormat('Y-m-d', $issue_date);
+    // $carbonDate->locale('fr');
+    // $data['issue_date'] = $carbonDate->translatedFormat('l j F Y');
+    // $data['livraison'] = 12;
+    // $numberToWords = new NumberToWords();
+    // $numberTransformer = $numberToWords->getNumberTransformer('fr');
+    // $data['numberToWords'] = $numberTransformer->toWords($proforma->total);
+    // $data['filename'] = $proforma->ref_proforma;
+    // $fractions = Fractionnement::where('ref_proforma', '=', $refProforma)->get();
+    // $data['fractions'] = $fractions->toArray();
+    // $data['type'] = $data['fractions'][0]["type"];
+    // $pdf = PDF::loadView('pages.back.admin.proformas.printer_invoice', $data);
+    // $pdf->setPaper('a4', 'portrait');
+    // $fileName = $customer->nom . '/' . 'proformas' . '/' . $data['filename'] . '.pdf';
+    // $pdfContent = $pdf->output();
+    // Storage::put($fileName, $pdfContent);
+    // $proforma->file = $fileName;
+    // $proforma->save();
+    // return $pdf->stream();
+  }
+
+  public function regenererFacture(){
+    $orderRef = url()->current();
+    $extractLink = Str::after($orderRef, 'regenererFacture/');
+    $refProforma = $extractLink;
+    $proforma = Proforma::where('ref_proforma', '=', $refProforma)->first();
+    // dd($proforma);
+
     $data['proforma'] = $proforma;
     $data['proformaItems'] = ProformaItem::where('ref_proforma', '=', $refProforma)->get();
     $customer_id = $proforma->customer_id;
@@ -148,6 +211,7 @@ class PrinterController extends Controller
     $data['customer_addresse'] = $customer->code_postale;
     $data['customer_number'] = $customer->contact;
     $checker = $customer->taxe_tva;
+
     if ($checker == "Oui") {
       $data['taxe_tva'] = 18;
     } else {
@@ -170,7 +234,7 @@ class PrinterController extends Controller
     $fractions = Fractionnement::where('ref_proforma', '=', $refProforma)->get();
     $data['fractions'] = $fractions->toArray();
     $data['type'] = $data['fractions'][0]["type"];
-    $pdf = PDF::loadView('pages.back.admin.factures.create_facture', $data);
+    $pdf = PDF::loadView('pages.back.admin.proformas.printer_invoice', $data);
     $pdf->setPaper('a4', 'portrait');
     $fileName = $customer->nom . '/' . 'proformas' . '/' . $data['filename'] . '.pdf';
     $pdfContent = $pdf->output();
@@ -179,7 +243,6 @@ class PrinterController extends Controller
     $proforma->save();
     return $pdf->stream();
   }
-
   public function regenererProforma($refProforma)
   {
     // $proforma = Proforma::where('ref_proforma', '=', $refProforma)->first();

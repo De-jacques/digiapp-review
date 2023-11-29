@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('proformas', function (Blueprint $table) {
-            $table->boolean('status_facture')->default(0);
-        });
+        if(!Schema::hasColumn('proformas', 'status_facture')) ; 
+        {
+            Schema::table('proformas', function (Blueprint $table)
+            {
+                $table->dropColumn('status_facture');
+            });
+        }
     }
 
     /**
@@ -21,8 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('proformas', function (Blueprint $table) {
-            $table->boolean('status_facture')->default(0);
-        });
+        // Schema::table('proformas', function (Blueprint $table) {
+        //     $table->boolean('status_facture')->default(0);
+        // });
     }
 };

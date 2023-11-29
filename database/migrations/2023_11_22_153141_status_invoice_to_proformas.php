@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('proformas', function (Blueprint $table) {
-          $table->boolean('status_bon')->default(0);
+            $table->boolean('status_invoice')->default(0);
         });
     }
 
@@ -21,15 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Schema::table('proformas', function (Blueprint $table) {
-        //   $table->boolean('status_bon')->default(0);
-        // });
-        if (Schema::hasColumn('proformas', 'status_bon'))
-        {
-            Schema::table('proformas', function (Blueprint $table)
-            {
-                $table->dropColumn('status_bon');
-            });
-        }
+        Schema::table('proformas', function (Blueprint $table) {
+            $table->dropColumn('status_invoice');
+        });
     }
 };

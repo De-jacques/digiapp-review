@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ref_proforma')->nullable()->constrained('proforma')->cascadeOnUpdate()->nullOnDelete(); 
+            $table->foreignId('ref_proforma')->nullable()->constrained('proformas')->cascadeOnUpdate()->nullOnDelete(); 
             $table->string('montant');
             $table->string('date_facture');
             $table->string('ref_facture');
+            $table->string('file_proforma');
             $table->timestamps();
         });
     }
