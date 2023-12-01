@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('factures', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->foreignId('ref_proforma')->nullable()->constrained('proformas')->cascadeOnUpdate()->nullOnDelete(); 
-        //     $table->string('montant');
-        //     $table->string('date_facture');
-        //     $table->string('ref_facture');
-        //     $table->string('file_proforma');
-        //     $table->timestamps();
-        // });
-        if (Schema::hasTable('factures')) {
+        Schema::create('factures', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('ref_proforma')->nullable()->constrained('proformas')->cascadeOnUpdate()->nullOnDelete(); 
+            $table->string('montant');
+            $table->string('date_facture');
+            $table->string('ref_facture');
             $table->string('file_proforma');
-        }
+            $table->timestamps();
+        });
     }
 
     /**

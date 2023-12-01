@@ -64,7 +64,11 @@
                                                                 {{$bon->typeBon->title}}
                                                             </td>
                                                             <td>{{$bon->created_at}}</td>
-                                                            <td>{{$bon->proforma->ref_proforma}}</td>
+                                                            @if (($bon->proforma->ref_proforma))
+                                                              <td>{{$bon->proforma->ref_proforma}}</td>   
+                                                            @else
+                                                               ... 
+                                                            @endif
                                                             <td>{{$bon->proforma->customer->nom}}</td>
                                                             <td>{{$bon->proforma->total}}</td>
                                                             <td><a href="" type="button" data-bs-toggle="modal" data-bs-target="#viewBon{{ $bon->id }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i></a></td>

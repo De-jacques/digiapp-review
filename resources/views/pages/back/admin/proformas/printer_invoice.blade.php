@@ -175,7 +175,7 @@
             </div>
         </div>
         <div class="mt-3  tm_primary_color">
-            Arrêtée la présente proforma à la somme de
+            Arrêtée la présente facture à la somme de
             <span class="fw-bold">
                 {{ $numberToWords }}
 

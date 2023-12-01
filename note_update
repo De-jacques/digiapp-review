@@ -4,3 +4,5 @@ php artisan migrate
 -- php artisan db:seed --class=TypeBon
 php artisan serve
 
+php artisan migrate:refresh --path=/database/migrations/2023_11_20_160544_create_factures_table.php
+

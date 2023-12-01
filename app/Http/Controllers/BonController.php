@@ -17,7 +17,8 @@ class BonController extends Controller
      */
     public function index()
     {
-        $bons = Bon::all();
+        $bons = Bon::orderBy('id','desc')->get();
+        // 
         return view('pages.back.admin.bons.list_bons', compact('bons'));
     }
     /**
