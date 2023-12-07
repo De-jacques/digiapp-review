@@ -87,11 +87,13 @@
                                                                     </a>
                                                                 {{-- @else --}}
                                                                 @endif
-                                                                @if ($proforma->status_invoice == 0)
+                                                                @if ($proforma->status_bon == 1 )
+                                                                {{-- && $proforma->status_invoice == 0 --}}
                                                                   <a href="{{route ('facture' , $proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark">
                                                                     <i class="fa fa-share"></i>
                                                                 </a>  
                                                                 @endif
+                                                               
                                                                 {{-- <a href="{{route ('test',$proforma->ref_proforma) }}" type="button" class="btn btn-outline-dark" target="_blank">
                                                                     <i class="fa fa-share"></i>
                                                                 </a> --}}
